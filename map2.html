@@ -3,38 +3,45 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="css/style1.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
 
-    <title>map1</title>
+  <title>map1</title>
+
 </head>
 
 <body>
-    <header class="head">
-        <h1>Kerala..GOD'S OWN COUNTRY!</h1>
-        <p>Author: Aghila Vijayakumar</p>
-    </header>
-    <hr>
-    <div class="main">
-        <div class="options-box">
-            <hr class="mainhr">
-            <span class="list">List of locations: </span>
-            <input class="search" type="search" placeholder="  Ex:Fort Kochi" data-bind="textInput: query,valueUpdate:'afterkeydown'" autocomplete="off" ">
+  <header class="head">
+    <h1>Kerala...</h1>
+    <h3>GOD'S OWN COUNTRY!</h3>
+    <p>Author: Aghila Vijayakumar</p>
 
-<ul data-bind="foreach: search ">
-<li data-bind="text: title,click:$parent.markers "></li>
-</ul>
-      </div>
-      </div>
+  </header>
 
-      <div id="map"></div>
-        <script src="lib/knockout-3.2.0.js "></script>
-        <script src="lib/jquery.min.js "></script>
-    <script src="app.js "></script>
+  <hr>
 
-        <script async defer
+  <div class="main">
+    <div class="options-box">
+      <span class="list"><br>List of locations: </span>
+     <!-- <input class="search" type="search" placeholder="  Ex:Fort Kochi" data-bind="textInput: query,valueUpdate:'afterkeydown'" autocomplete="off" ">-->
+      <input class="search" type="search" placeholder="  Ex:Fort Kochi" data-bind="textInput: query">
+      <input class="search-btn" type="button" value="search">
+
+
+        <ul data-bind="foreach: search">
+            <li data-bind="text: title,click:$parent.markers "></li>
+        </ul>
+    </div>
+  </div>
+
+  <div id="map"></div>
+
+  <script src="lib/knockout-3.2.0.js "></script>
+  <script src="lib/jquery.min.js "></script>
+  <script src="oopzapp.js "></script>
+  <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBagscOlVFlJbYdzwptEvD8DDPD2kyPKrc&libraries=geometry&v=3&callback=initMap ">
-    </script>
+  </script>
 </body>
 </html>
