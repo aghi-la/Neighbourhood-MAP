@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/style1.css">
+
+    <title>map1</title>
+</head>
+
+<body>
+    <header class="head">
+        <h1>Kerala..GOD'S OWN COUNTRY!</h1>
+        <p>Author: Aghila Vijayakumar</p>
+    </header>
+    <hr>
+    <div class="main">
+        <div class="options-box">
+            <hr class="mainhr">
+            <span class="list">List of locations: </span>
+            <input class="search" type="search" placeholder="  Ex:Fort Kochi" data-bind="textInput: query,valueUpdate:'afterkeydown'" autocomplete="off" ">
+
+<ul data-bind="foreach: search ">
+<li data-bind="text: title,click:$parent.markers "></li>
+</ul>
+      </div>
+      </div>
+
+      <div id="map"></div>
+        <script src="lib/knockout-3.2.0.js "></script>
+        <script src="lib/jquery.min.js "></script>
+    <script src="app.js "></script>
+
+        <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBagscOlVFlJbYdzwptEvD8DDPD2kyPKrc&libraries=geometry&v=3&callback=initMap ">
+    </script>
+</body>
+</html>
