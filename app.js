@@ -1,21 +1,21 @@
 //List of famous tourist places and restaurants in Ernakulam.
 var mainLocations = [{
+    title: 'Athirappilly Falls',
+    location: {
+        lat: 10.2851,
+        lng: 76.5698
+    }
+}, {
     title: 'Fort Kochi',
     location: {
         lat: 9.9658,
         lng: 76.2421
     }
 }, {
-    title: 'Vizhinjam Lighthouse',
+    title: 'Guruvayur Temple',
     location: {
-        lat: 8.3829,
-        lng: 76.9797
-    }
-}, {
-    title: 'Athirapally Waterfalls',
-    location: {
-        lat: 10.2851,
-        lng: 76.5698
+        lat: 10.5946,
+        lng: 76.0394
     }
 }, {
     title: 'Idikki Dam',
@@ -24,10 +24,22 @@ var mainLocations = [{
         lng: 76.9763
     }
 }, {
-    title: 'Chinese Fishing Nets',
+    title: 'Kappad Beach',
     location: {
-        lat: 9.9683,
-        lng: 76.2420
+        lat: 11.3807,
+        lng: 75.7261
+    }
+}, {
+    title: 'Marari Beach',
+    location: {
+        lat: 9.6016,
+        lng: 76.2983
+    }
+}, {
+    title: 'Padmanabhaswamy Temple',
+    location: {
+        lat: 8.4828,
+        lng: 76.9436
     }
 }, {
     title: 'Periyar Wildlife Sanctuary',
@@ -42,28 +54,16 @@ var mainLocations = [{
         lng: 76.2503
     }
 }, {
-    title: 'Marari Beach',
-    location: {
-        lat: 9.6016,
-        lng: 76.2983
-    }
-}, {
-    title: 'Kappad Beach',
-    location: {
-        lat: 11.3807,
-        lng: 75.7261
-    }
-}, {
-    title: 'Wagamon',
+    title: 'Vagamon',
     location: {
         lat: 9.6862,
         lng: 76.9052
     }
 }, {
-    title: 'Padmanabhaswamy temple',
+    title: 'Vizhinjam Lighthouse',
     location: {
-        lat: 8.4828,
-        lng: 76.9436
+        lat: 8.3829,
+        lng: 76.9797
     }
 }];
 
@@ -156,7 +156,7 @@ function initMap() {
         }, //Lattitude and Longitude of ERNAKULAM.
         zoom: 13,
         styles: styles
-            // mapTypeControl: false
+        // mapTypeControl: false
     });
     ko.applyBindings(new ViewModel());
 
@@ -169,42 +169,43 @@ var ViewModel = function() {
     var self = this;
     self.locationList = ko.observableArray(mainLocations);
     self.title = ko.observable('');
+    self.showList = ko.observable(true);
     // self.markers = ko.observableArray();
-    this.markers = function() {
-        populateInfoWindow(this.marker, largeInfowindow);
-    };
+    // this.markers = function() {
+    //     populateInfoWindow(this.marker, largeInfowindow);
+    //     // self.query(clicked);
+    // };
+
+
+
     self.query = ko.observable('');
     self.search = ko.computed(function() {
         var userInput = self.query().toLowerCase(); // Make search case insensitive
-
-        // console.log("----- search filter -------");
 
         return searchResult = ko.utils.arrayFilter(self.locationList(), function(item) {
             var title = item.title.toLowerCase(); // Make search case insensitive
             var userInputIsInTitle = title.indexOf(userInput) >= 0; // true or false
 
-            // console.log(title, userInput, userInputIsInTitle);
-
             if (userInputIsInTitle) {
+                self.locationList().item.title.showList(true);// To dispaly the searched loaction in placeholder
                 if (item.marker) {
                     item.marker.setVisible(userInputIsInTitle); // toggle visibility of the marker
                 }
             }
-
             return userInputIsInTitle;
+    else{
+        self.locationList().item.title.showList(false);
+        item.marker.setVisible(!userInputIsInTitle);
+    }
         });
-    })
+    });
 
-    // mainLocations.forEach(function(item){
-    //     self.locationList.push(new Locations(item));
-    // });
-    // this.currentLocation = ko.observable(this.locationList()[0]);//to access zeroth element in the location list.
-    // this.setLocation = function(clickedLoctions){
-    //     self.currentLocation(clickedLoctions);
-    // };
-    //     self.currentLocation = function() {
-    //     populateInfoWindow(this, largeInfowindow);
-    // };
+
+
+    self.infoDisplay = function(mainLocations) {
+        google.maps.event.trigger(mainLocations.marker, 'click');
+    };
+
 
     //Initialize the InfoWindow
     var largeInfowindow = new google.maps.InfoWindow();
@@ -233,15 +234,9 @@ var ViewModel = function() {
         // Push the marker to our array of markers.
         markers.push(marker);
 
-        // self.markers.push(marker);
-        // marker.forEach(function(place){
-        //   self.markers()[i].push(marker);
-        // })
-
-        //           // self.locationList()[i].marker = marker;
-
         // Create an onclick event to open the large infowindow at each marker.
         marker.addListener('click', function() {
+
             populateInfoWindow(this, largeInfowindow);
             toggleBounce(this, marker);
         });
@@ -259,6 +254,10 @@ var ViewModel = function() {
     }
     //make sure all of the markers fit within the map bounds
     map.fitBounds(bounds);
+    map.setCenter(bounds.getCenter());
+    // Sets the boundaries of the map based on pin locations
+    window.mapBounds = new google.maps.LatLngBounds();
+
 };
 
 // This function populates the infowindow when the marker is clicked. We'll only allow
@@ -278,6 +277,29 @@ function populateInfoWindow(marker, infowindow) {
         //Declaring streetViewService and radius
         var streetViewService = new google.maps.StreetViewService();
         var radius = 50;
+        // In case the status is OK, which means the pano was found, compute the
+        // position of the streetview image, then calculate the heading, then get a
+        // panorama from that and set the options
+        function getStreetView(data, status) {
+            if (status == google.maps.StreetViewStatus.OK) {
+                var nearStreetViewLocation = data.location.latLng;
+                var heading = google.maps.geometry.spherical.computeHeading(
+                    nearStreetViewLocation, marker.position);
+                // infowindow.setContent('<div>' + marker.title + '</div><br><a href ="' + URL + '">' + URL + '</a><hr><div id="pano"></div>');
+                var panoramaOptions = {
+                    position: nearStreetViewLocation,
+                    pov: { //pov:-> point of view
+                        heading: heading,
+                        pitch: 30 //slightly above the building
+                    }
+                };
+                var panorama = new google.maps.StreetViewPanorama(
+                    document.getElementById('pano'), panoramaOptions);
+            } else {
+                infowindow.setContent('<div>' + marker.title + '</div>' +
+                    '<div>No Street View Found</div>');
+            }
+        }
 
         //code for wikipedia ajax request.
         var wikiURL = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&format=json&callback=wikiCallback';
@@ -290,52 +312,31 @@ function populateInfoWindow(marker, infowindow) {
             success: function(response) {
                 var articleStr = response[1];
                 var URL = 'http://en.wikipedia.org/wiki/' + articleStr;
+                // Use streetview service to get the closest streetview image within
+                // 50 meters of the markers position
+                streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
+                infowindow.setContent('<div>' + marker.title + '</div><br><a href ="' + URL + '">' + URL + '</a><hr><div id="pano"></div>');
+
+                // Open the infowindow on the correct marker.
+                infowindow.open(map, marker);
                 console.log(URL);
-                getStreetView();
+                // getStreetView();
                 clearTimeout(wikiTimeoutRequest);
 
             }
         });
 
-
-        // In case the status is OK, which means the pano was found, compute the
-        // position of the streetview image, then calculate the heading, then get a
-        // panorama from that and set the options
-        function getStreetView(data, status) {
-                if (status == google.maps.StreetViewStatus.OK) {
-                    var nearStreetViewLocation = data.location.latLng;
-                    var heading = google.maps.geometry.spherical.computeHeading(
-                        nearStreetViewLocation, marker.position);
-                    infowindow.setContent('<div>' + marker.title + '</div><br><a href ="' + URL + '">' + URL + '</a><hr><div id="pano"></div>');
-                    var panoramaOptions = {
-                        position: nearStreetViewLocation,
-                        pov: { //pov:-> point of view
-                            heading: heading,
-                            pitch: 30 //slightly above the building
-                        }
-                    };
-                    var panorama = new google.maps.StreetViewPanorama(
-                        document.getElementById('pano'), panoramaOptions);
-                } else {
-                    infowindow.setContent('<div>' + marker.title + '</div>' +
-                        '<div>No Street View Found</div>');
-                }
-            }
-            // Use streetview service to get the closest streetview image within
-            // 50 meters of the markers position
-        streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
-        // Open the infowindow on the correct marker.
-        infowindow.open(map, marker);
     }
 }
 
-//Adding bounce animation to marker when it is clicked and stop animation after 2 seconds
+//Adding bounce animation to marker when it is clicked and stop animation after 1 seconds
 function toggleBounce(marker) {
     marker.setAnimation(google.maps.Animation.BOUNCE);
     setTimeout(function() {
         marker.setAnimation(google.maps.Animation.null);
-    }, 2000);
+    }, 1000);
 };
+
 
 // This function takes in a COLOR, and then creates a new marker
 // icon of that color. The icon will be 21 px wide by 34 high, have an origin
@@ -349,4 +350,15 @@ function makeMarkerIcon(markerColor) {
         new google.maps.Point(10, 34),
         new google.maps.Size(21, 34));
     return markerImage;
+};
+
+// // Vanilla JS way to listen for resizing of the window
+// // and adjust map bounds
+window.addEventListener('resize', function(e) {
+//   // Make sure the map bounds get updated on page resize
+ map.fitBounds(mapBounds);
+});
+
+var googleError = function() {
+    alert('Oopz!.failed to load google map.Try again later');
 };
