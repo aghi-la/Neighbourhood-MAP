@@ -2,7 +2,7 @@
 ##Instructions to use:
 <ol>
 <li>Download and extract the zip file onto your local machine</li>
-<li>Open index.html in any server to view the map application</li>
+<li>Open index.html in any browser to view the map application</li>
 <li>The list of some famous locations in kerala and their marker positions are visible in the app</li>
 <li>Click on any loaction and the marker will show its position in the map</li>
 <li>StreetView as well as the wikipedia url will help you to know more about that location</li>
