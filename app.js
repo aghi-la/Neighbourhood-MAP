@@ -178,33 +178,52 @@ var ViewModel = function() {
 
 
 
-    self.query = ko.observable('');
+//     self.query = ko.observable('');
+//     self.search = ko.computed(function() {
+//         var userInput = self.query().toLowerCase(); // Make search case insensitive
+
+//         return searchResult = ko.utils.arrayFilter(self.locationList(), function(item) {
+//             var title = item.title.toLowerCase(); // Make search case insensitive
+//             var userInputIsInTitle = title.indexOf(userInput) >= 0; // true or false
+
+//             if (userInputIsInTitle) {
+//                 self.locationList().item.title.showList(true);// To dispaly the searched loaction in placeholder
+//                 if (item.marker) {
+//                     item.marker.setVisible(userInputIsInTitle); // toggle visibility of the marker
+//                 }
+//             }
+//             return userInputIsInTitle;
+//     else{
+//         self.locationList().item.title.showList(false);
+//         item.marker.setVisible(!userInputIsInTitle);
+//     }
+//         });
+//     });
+    self.showList = ko.observable(true);
     self.search = ko.computed(function() {
-        var userInput = self.query().toLowerCase(); // Make search case insensitive
-
-        return searchResult = ko.utils.arrayFilter(self.locationList(), function(item) {
-            var title = item.title.toLowerCase(); // Make search case insensitive
-            var userInputIsInTitle = title.indexOf(userInput) >= 0; // true or false
-
-            if (userInputIsInTitle) {
-                self.locationList().item.title.showList(true);// To dispaly the searched loaction in placeholder
-                if (item.marker) {
-                    item.marker.setVisible(userInputIsInTitle); // toggle visibility of the marker
-                }
+       self.query = ko.observable('');
+       var userInput = self.query.toLowerCase();
+       for (var i = 0; i < self.locationList().length; i++) {
+          var userInputIsInTitle = self.locationList()[i].title.toLowerCase();
+          if (userInputIsInTitle.indexOf(userInput) >= 0) {
+              self.locationList()[i].showList(true);
+              if (self.locationList()[i].marker) {
+                 self.locationList()[i].marker.setVisible(true);
+              }
+         } else {
+            self.locationList()[i].showList(false);
+            if (self.locationList()[i].marker) {
+                self.locationList()[i].marker.setVisible(false);
             }
-            return userInputIsInTitle;
-    else{
-        self.locationList().item.title.showList(false);
-        item.marker.setVisible(!userInputIsInTitle);
-    }
-        });
-    });
+           }
+        }
+    }); 
 
 
 
-    self.infoDisplay = function(mainLocations) {
-        google.maps.event.trigger(mainLocations.marker, 'click');
-    };
+//     self.infoDisplay = function(mainLocations) {
+//         google.maps.event.trigger(mainLocations.marker, 'click');
+//     };
 
 
     //Initialize the InfoWindow
@@ -240,6 +259,10 @@ var ViewModel = function() {
             populateInfoWindow(this, largeInfowindow);
             toggleBounce(this, marker);
         });
+        // To display the clicked marker's title in   
+        self.dispalyMarker = function(clickedItem) {
+            populateInfoWindow(clickedItem.marker, largeInfowindow);
+        };
         // Two event listeners - one for mouseover, one for mouseout,
         // to change the colors back and forth.
         marker.addListener('mouseover', function() {
