@@ -12,9 +12,13 @@ The map app consists of one HTML file(index.html),CSS file(style.css),JavaScript
 The knockout.js which is an organizational library is used to make this app.Knockout is used to handle the list, filter, and any other information on the page that is subject to changing state.Google maps API is used to make the map visible.Wikipedia API is used to include the details of the location. JS,HTML,CSS are beautified and minified using online tools.
 ##Reference:
 <ul>
-<li>Udacity Course materials:Building the Move Planner App(reference for AJAX request,Wikipedia API)</li>
+<li>Udacity Course materials:<br>
+* Building the Move Planner App(reference for AJAX request,Wikipedia API)<br>
+* Google Maps API
+</li>
+
 <li>Google API Documentation</li>
 <li>Knockout documentation</li>
-<li></li>
+<li></li></ul>
 
 
