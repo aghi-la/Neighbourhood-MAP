@@ -1,84 +1,116 @@
-* {
-    box-sizing: border-box;
-}
 html,
 body {
     height: 100%;
-    margin: 0;
-    padding: 0;
+    margin: 2px;
+    padding: 5px;
+    color: black;
+    border-radius: 10px;
     background-image: url('https://hd.unsplash.com/photo-1436262513933-a0b06755c784');
 }
-#map {
-    bottom: 0px;
-    width: 76%;
-    height: 100%;
-    left: 330px;
-    position: absolute;
-    /*padding-right: 500px;*/
-
-    padding-top: 15px;
-    /*padding-bottom: 100px;*/
-}
-.head {
-    /*padding-top: 5px;*/
-
-    padding-left: 8px;
-}
-h1 {
-    font-size: 50px;
+header h1 {
+    font-size: 35px;
     color: red;
+}
+.green {
+    color: green;
+}
+.hr1 {
+    height: 2px;
+    background-color: #FF9933;
+}
+.hr2 {
+    height: 2px;
+    background-color: #FFFFFF;
+}
+.hr3 {
+    height: 2px;
+    background-color: #138808;
+}
+#map {
+    height: 100%;
+    width: 100%;
+}
+.list {
+    color: black;
+    font-size: 20px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+.filterlist {
+    color: blue;
+    font-size: 18px;
 }
 #pano {
     width: 400px;
     height: 200px;
 }
-.main {
-    height: 70%;
-    position: relative;
-    border: 1px solid #999;
-    border-radius: 3px;
-    line-height: 30px;
-    padding-bottom: 35px;
-    padding-left: 10px;
-    text-align: left;
-    width: 320px;
-    background-color: green;
+.listview {
+    padding-bottom: 10px;
 }
-.option-box {
-    padding-left: 100px;
+.my-class {
+    width: 100%;
 }
-.search {
-    width: 60%;
+.menu-btn div {
+    position: absolute;
+    left: 100%;
+    top: 64%;
+    padding-right: 8px;
+    margin-top: -0.50em;
+    line-height: 1.2;
+    font-size: 18px;
+    font-weight: 200;
+    vertical-align: middle;
+    z-index: 99;
 }
-@media only screen and (max-width: 750px) {
-    html,
-    body {
-        background-image: url('https://hd.unsplash.com/photo-1436262513933-a0b06755c784');
-    }
+.menu-btn span {
+    display: block;
+    width: 19px;
+    height: 3px;
+    margin: 4px 0;
+    background: rgb(0, 0, 0);
+    z-index: 99;
+}
+.responsive-menu {
+    display: none;
+}
+.expand {
+    display: block !important;
+}
+@media only screen and (max-width: 700px) {
     #map {
-        bottom: 0px;
-        width: 75%;
         height: 100%;
-        left: 280px;
         position: absolute;
-        /*padding-right: 500px;*/
-        /*padding-top: 200px;*/
-        /*padding-bottom: 100px;*/
-    }
-    .main {
-        height: 80%;
-        position: relative;
-        border: 1px solid #999;
-        border-radius: 3px;
-        line-height: 30px;
-        padding-bottom: 35px;
-        padding-left: 10px;
-        text-align: left;
-        width: 280px;
-        background-color: #FF00FF;
+        width: 94%;
+        padding-top: 30px;
     }
     #pano {
-    width: 200px;
-    height: 100px;
-}
+        width: 200px;
+        height: 100px;
+    }
+    .menu-btn div {
+        position: absolute;
+        left: 100%;
+        top: 64%;
+        padding-right: 8px;
+        margin-top: -0.50em;
+        line-height: 1.2;
+        font-size: 18px;
+        font-weight: 200;
+        vertical-align: middle;
+        z-index: 99;
+    }
+    .menu-btn span {
+        display: block;
+        width: 19px;
+        height: 3px;
+        margin: 4px 0;
+        background: rgb(0, 0, 0);
+        z-index: 99;
+    }
+    .responsive-menu {
+        display: none;
+    }
+    .expand {
+        display: block !important;
+    }
 }
