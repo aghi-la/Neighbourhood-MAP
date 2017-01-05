@@ -1,49 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-<html>
-
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="css/bootstrap.css">
-  <link rel="stylesheet" type="text/css" href="css/style1.css">
-
-  <title>map1</title>
-
+    <meta charset="utf-8">
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link href="css/style1.css" rel="stylesheet">
+    <title>kerala</title>
 </head>
 
 <body>
   <header class="head">
-    <h1>Kerala...</h1>
-    <h3>GOD'S OWN COUNTRY!</h3>
+    <h1>Kerala...</h1><h2 class="green">GOD'S OWN COUNTRY!</h2>
     <p>Author: Aghila Vijayakumar</p>
 
   </header>
+    <hr class = "hr1">
+    <hr class = "hr2">
+    <hr class = "hr3">
+    <div data-bind="css: { "my-class": someValue }">
+        <div class="menu-btn" id="menu-btn">
+            <div></div>
+             <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="responsive-menu">
+                <div class="list">List of locations: </div>
 
-  <hr>
+                    <input type="search" placeholder="Ex:Fort Kochi" data-bind="textInput: query">
 
-  <div class="main">
-    <div class="options-box">
-      <span class="list"><br>List of locations: </span>
-     <!-- <input class="search" type="search" placeholder="  Ex:Fort Kochi" data-bind="textInput: query,valueUpdate:'afterkeydown'" autocomplete="off" ">-->
-      <input class="search" type="search" placeholder="  Ex:Fort Kochi" data-bind="textInput: query,visible : showList" >
-      <!-- <input class="search-btn" type="button" value="search" > -->
+                <ul class="filterlist" data-bind="foreach: search">
+                    <li class="listview" data-bind="text: title, click: $parent.currentMarker"></li>
+                </ul>
 
-
-        <ul data-bind="foreach: search">
-            <li data-bind="text: title,click: $parent.dispalyMarker,visible :showList"></li>
-        </ul>
+        </div>
     </div>
-  </div>
+    <div id="map"></div>
 
-  <div id="map"></div>
-
-  <script src="lib/knockout-3.4.1.js "></script>
-  <script src="lib/jquery.min.js "></script>
-  <script src="app.js "></script>
-  <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBagscOlVFlJbYdzwptEvD8DDPD2kyPKrc&libraries=geometry&v=3&callback=initMap" onerror="googleError()">
+   <script src="lib/knockout-3.4.1.js"></script>
+   <script src="lib/jquery.min.js "></script>
+   <script src="app.js"></script>
+   <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBagscOlVFlJbYdzwptEvD8DDPD2kyPKrc&libraries=geometry,places&v=3&callback=initMap" onerror="googleError()">
   </script>
-
 </body>
+
 </html>
