@@ -23,7 +23,7 @@ The knockout.js which is an organizational library is used to make this app.Knoc
 * CSS bindings
 * http://www.knockmeout.net/2011/04/utility-functions-in-knockoutjs.html
 </li>
-<li>Hambourger Icons</li>
+<li>Hambourger Icons : http://www.internetkultur.at/simple-hamburger-drop-down-menu-with-css-and-jquery/ </li>
 <li>Udacity Discussion Forum and the mentors</li>
 
 </ul>
