@@ -14,11 +14,15 @@ The knockout.js which is an organizational library is used to make this app.Knoc
 <ul>
 <li>Udacity Course materials:<br>
 * Building the Move Planner App(reference for AJAX request,Wikipedia API)<br>
+* JavaScript Design patterns(Using an organizational Library)<br>
 * Google Maps API
 </li>
 
 <li>Google API Documentation</li>
-<li>Knockout documentation</li>
-<li></li></ul>
+<li>Knockout documentation: <br>
+* CSS bindings
+* http://www.knockmeout.net/2011/04/utility-functions-in-knockoutjs.html
+</li>
+<li>Hambourger Icons</li></ul>
 
 
