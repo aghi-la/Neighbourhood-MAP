@@ -30,7 +30,7 @@
                     <input type="search" placeholder="Ex:Fort Kochi" data-bind="textInput: query">
 
                 <ul class="filterlist" data-bind="foreach: search">
-                    <li class="listview" data-bind="text: title, click: $parent.currentMarker"></li>
+                    <li class="listview" data-bind="text: title, click: $parent.myClickEventHandler"></li>
                 </ul>
 
         </div>
