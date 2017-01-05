@@ -173,10 +173,20 @@ var ViewModel = function() {
     self.locationList = ko.observableArray(mainLocations);
     self.title = ko.observable('');
     self.navigation = ko.observable();
-    self.currentMarker = function(place) {
-        console.log(place.title);
-        toggleBounce(place.marker);
-    };
+//     self.currentMarker = function(place) {
+//         console.log(place.title);
+//         toggleBounce(place.marker);
+//     };
+ self.locationList().forEach(function(myItem, index) {
+    myItem.id = index;
+});
+self.myClickEventHandler = function(currentItem) {
+     var index = currentItem.id;
+     var marker = markers[index];
+     console.log(marker); // Double check the marker object
+     // Do something with the marker object of the clicked list item
+     populateInfoWindow(currentItem.marker,largeInfowindow);
+};
 
     self.query = ko.observable('');
     self.search = ko.computed(function() {
