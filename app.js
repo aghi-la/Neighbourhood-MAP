@@ -1,4 +1,4 @@
-//Navigation Bar
+//Navigation Bar for hamburger Icon
 jQuery(function($) {
     $('.menu-btn').click(function() {
         $('.responsive-menu').toggleClass('expand')
