@@ -172,8 +172,9 @@ var ViewModel = function() {
     var self = this;
     self.locationList = ko.observableArray(mainLocations);
     self.title = ko.observable('');
+    self.navigation = ko.observable();
     self.currentMarker = function(place) {
-        console.log("show marker");
+        console.log(place.title);
         toggleBounce(place.marker);
     };
 
