@@ -174,7 +174,7 @@ var ViewModel = function() {
     self.title = ko.observable('');
     self.currentMarker = function(place) {
         console.log("show marker");
-        toggleBounce(place.marker,marker);
+        toggleBounce(place.marker);
     };
 
     self.query = ko.observable('');
