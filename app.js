@@ -1,3 +1,10 @@
+//Navigation Bar
+jQuery(function($) {
+    $('.menu-btn').click(function() {
+        $('.responsive-menu').toggleClass('expand')
+    });
+});
+
 //List of famous tourist places and restaurants in Ernakulam.
 var mainLocations = [{
     title: 'Athirappilly Falls',
@@ -138,12 +145,7 @@ var styles = [{
     }]
 }];
 
-//*Model*//
 
-// var Locations = function(data){
-//     this.title = ko.observable(data.title);
-//     // this.location = ko.observableArray(data.location);
-// };
 //Creates a new map
 var map;
 
@@ -158,6 +160,7 @@ function initMap() {
         styles: styles
         // mapTypeControl: false
     });
+
     ko.applyBindings(new ViewModel());
 
 }
@@ -169,61 +172,32 @@ var ViewModel = function() {
     var self = this;
     self.locationList = ko.observableArray(mainLocations);
     self.title = ko.observable('');
-    self.showList = ko.observable(true);
-    // self.markers = ko.observableArray();
-    // this.markers = function() {
-    //     populateInfoWindow(this.marker, largeInfowindow);
-    //     // self.query(clicked);
-    // };
+    self.currentMarker = function(place) {
+        console.log("show marker");
+        toggleBounce(place.marker,marker);
+    };
 
-
-
-//     self.query = ko.observable('');
-//     self.search = ko.computed(function() {
-//         var userInput = self.query().toLowerCase(); // Make search case insensitive
-
-//         return searchResult = ko.utils.arrayFilter(self.locationList(), function(item) {
-//             var title = item.title.toLowerCase(); // Make search case insensitive
-//             var userInputIsInTitle = title.indexOf(userInput) >= 0; // true or false
-
-//             if (userInputIsInTitle) {
-//                 self.locationList().item.title.showList(true);// To dispaly the searched loaction in placeholder
-//                 if (item.marker) {
-//                     item.marker.setVisible(userInputIsInTitle); // toggle visibility of the marker
-//                 }
-//             }
-//             return userInputIsInTitle;
-//     else{
-//         self.locationList().item.title.showList(false);
-//         item.marker.setVisible(!userInputIsInTitle);
-//     }
-//         });
-//     });
-    self.showList = ko.observable(true);
+    self.query = ko.observable('');
     self.search = ko.computed(function() {
-       self.query = ko.observable('');
-       var userInput = self.query().toLowerCase();
-       for (var i = 0; i < self.locationList().length; i++) {
-          var userInputIsInTitle = self.locationList()[i].title.toLowerCase();
-          if (userInputIsInTitle.indexOf(userInput) >= 0) {
-              self.locationList()[i].showList(true);
-              if (self.locationList()[i].marker) {
-                 self.locationList()[i].marker.setVisible(true);
-              }
-         } else {
-            self.locationList()[i].showList(false);
-            if (self.locationList()[i].marker) {
-                self.locationList()[i].marker.setVisible(false);
+        var userInput = self.query().toLowerCase(); // Make search case insensitive
+
+        // console.log("----- search filter -------");
+
+        return searchResult = ko.utils.arrayFilter(self.locationList(), function(item) {
+            var title = item.title.toLowerCase(); // Make search case insensitive
+            var userInputIsInTitle = title.indexOf(userInput) >= 0; // true or false
+
+            // console.log(title, userInput, userInputIsInTitle);
+
+            if (userInputIsInTitle) {
+                if (item.marker) {
+                    item.marker.setVisible(userInputIsInTitle); // toggle visibility of the marker
+                }
             }
-           }
-        }
-    }); 
 
-
-
-//     self.infoDisplay = function(mainLocations) {
-//         google.maps.event.trigger(mainLocations.marker, 'click');
-//     };
+            return userInputIsInTitle;
+        });
+    })
 
 
     //Initialize the InfoWindow
@@ -255,14 +229,10 @@ var ViewModel = function() {
 
         // Create an onclick event to open the large infowindow at each marker.
         marker.addListener('click', function() {
-
             populateInfoWindow(this, largeInfowindow);
             toggleBounce(this, marker);
         });
-        // To display the clicked marker's title in   
-        self.dispalyMarker = function(clickedItem) {
-            populateInfoWindow(clickedItem.marker, largeInfowindow);
-        };
+
         // Two event listeners - one for mouseover, one for mouseout,
         // to change the colors back and forth.
         marker.addListener('mouseover', function() {
@@ -277,9 +247,8 @@ var ViewModel = function() {
     }
     //make sure all of the markers fit within the map bounds
     map.fitBounds(bounds);
-    map.setCenter(bounds.getCenter());
     // Sets the boundaries of the map based on pin locations
-    window.mapBounds = new google.maps.LatLngBounds();
+    // window.mapBounds = new google.maps.LatLngBounds();
 
 };
 
@@ -343,7 +312,6 @@ function populateInfoWindow(marker, infowindow) {
                 // Open the infowindow on the correct marker.
                 infowindow.open(map, marker);
                 console.log(URL);
-                // getStreetView();
                 clearTimeout(wikiTimeoutRequest);
 
             }
@@ -359,6 +327,7 @@ function toggleBounce(marker) {
         marker.setAnimation(google.maps.Animation.null);
     }, 1000);
 };
+
 
 
 // This function takes in a COLOR, and then creates a new marker
@@ -377,10 +346,10 @@ function makeMarkerIcon(markerColor) {
 
 // // Vanilla JS way to listen for resizing of the window
 // // and adjust map bounds
-window.addEventListener('resize', function(e) {
-//   // Make sure the map bounds get updated on page resize
- map.fitBounds(mapBounds);
-});
+// window.addEventListener('resize', function(e) {
+// //   // Make sure the map bounds get updated on page resize
+//  map.fitBounds(mapBounds);
+// });
 
 var googleError = function() {
     alert('Oopz!.failed to load google map.Try again later');
