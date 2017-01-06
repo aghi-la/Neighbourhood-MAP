@@ -5,20 +5,6 @@ jQuery(function($) {
     });
 });
 
-//List of famous tourist places and restaurants in Ernakulam.
-var mainLocations = [{
-    title: 'Athirappilly Falls',
-    location: {
-        lat: 10.2851,
-        lng: 76.5698
-    }
-}, {//Navigation Bar for hamburger Icon
-jQuery(function($) {
-    $('.menu-btn').click(function() {
-        $('.responsive-menu').toggleClass('expand')
-    });
-});
-
 //List of famous places to visit in kerala.
 var mainLocations = [{
     title: 'Athirappilly Falls',
