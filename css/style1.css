@@ -1,17 +1,25 @@
+* {
+    box-sizing: border-box;
+}
 html,
 body {
     height: 100%;
-    margin: 2px;
+    margin: 3px;
     padding: 5px;
     color: black;
-    border-radius: 10px;
+    border-radius: 12px;
     background-image: url('https://hd.unsplash.com/photo-1436262513933-a0b06755c784');
 }
 header h1 {
     font-size: 35px;
     color: red;
+    padding-left: 10px;
+}
+p {
+    padding-left: 10px;
 }
 .green {
+    padding-left: 10px;
     color: green;
 }
 .hr1 {
@@ -38,16 +46,22 @@ header h1 {
 }
 .filterlist {
     color: blue;
-    font-size: 18px;
+    font-size: 15px;
 }
 #pano {
-    width: 400px;
+    width: 600px;
     height: 200px;
 }
 .listview {
     padding-bottom: 10px;
 }
-.my-class {
+.image {
+    float: right;
+    max-width: 100%;
+    padding-bottom: 10px;
+    padding-right: 20px;
+}
+.mob-nav {
     width: 100%;
 }
 .menu-btn div {
@@ -81,7 +95,7 @@ header h1 {
         height: 100%;
         position: absolute;
         width: 94%;
-        padding-top: 30px;
+        padding-top: 5px;
     }
     #pano {
         width: 200px;
@@ -112,5 +126,10 @@ header h1 {
     }
     .expand {
         display: block !important;
+    }
+}
+@media only screen and (max-width: 350px) {
+    .image {
+        float: center;
     }
 }
